@@ -1,0 +1,41 @@
+﻿
+E:\MyProject\Web\FINANCE-MANAGEMENT\frontend\src\context\AuthContext.tsx
+  31:17  error  Unexpected any. Specify a different type                                                                                        @typescript-eslint/no-explicit-any
+  49:17  error  Unexpected any. Specify a different type                                                                                        @typescript-eslint/no-explicit-any
+  71:13  error  Empty block statement                                                                                                           no-empty
+  84:17  error  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+E:\MyProject\Web\FINANCE-MANAGEMENT\frontend\src\context\CategoryContext.tsx
+  28:17  error  Unexpected any. Specify a different type                                                                                        @typescript-eslint/no-explicit-any
+  64:17  error  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+E:\MyProject\Web\FINANCE-MANAGEMENT\frontend\src\context\DashboardContext.tsx
+  39:17  error  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+E:\MyProject\Web\FINANCE-MANAGEMENT\frontend\src\context\ThemeContext.tsx
+  27:17  error  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+E:\MyProject\Web\FINANCE-MANAGEMENT\frontend\src\context\TransactionContext.tsx
+  43:17  error  Unexpected any. Specify a different type                                                                                        @typescript-eslint/no-explicit-any
+  97:17  error  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+E:\MyProject\Web\FINANCE-MANAGEMENT\frontend\src\pages\DashboardPage.tsx
+  11:94  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+E:\MyProject\Web\FINANCE-MANAGEMENT\frontend\src\store\slices\authSlice.ts
+  21:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  35:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  50:41  error  Empty block statement                     no-empty
+
+E:\MyProject\Web\FINANCE-MANAGEMENT\frontend\src\store\slices\categorySlice.ts
+  22:15  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  30:15  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  38:15  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+E:\MyProject\Web\FINANCE-MANAGEMENT\frontend\src\store\slices\transactionSlice.ts
+  25:15  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  36:15  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  44:15  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+Γ£û 20 problems (20 errors, 0 warnings)
+
