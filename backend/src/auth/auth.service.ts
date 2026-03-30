@@ -37,7 +37,12 @@ export class AuthService {
     const tokens = await this.generateTokens(user.id, user.email);
     await this.saveRefreshToken(user.id, tokens.refreshToken);
     return {
-      user: { id: user.id, email: user.email, name: user.account?.name, isFirstTime: user.isFirstTime },
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.account?.name,
+        isFirstTime: Boolean(user.isFirstTime),
+      },
       ...tokens,
     };
   }
@@ -55,7 +60,12 @@ export class AuthService {
     const tokens = await this.generateTokens(user.id, user.email);
     await this.saveRefreshToken(user.id, tokens.refreshToken);
     return {
-      user: { id: user.id, email: user.email, name: user.account?.name, isFirstTime: user.isFirstTime },
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.account?.name,
+        isFirstTime: Boolean(user.isFirstTime),
+      },
       ...tokens,
     };
   }
@@ -90,12 +100,14 @@ export class AuthService {
         account: { select: { name: true } },
       },
     });
+    if (!user) throw new UnauthorizedException('User not found');
+
     return {
-      id: user?.id,
-      email: user?.email,
-      name: user?.account?.name,
-      isFirstTime: user?.isFirstTime,
-      createdAt: user?.createdAt,
+      id: user.id,
+      email: user.email,
+      name: (user.account as { name: string | null } | null)?.name,
+      isFirstTime: Boolean(user.isFirstTime),
+      createdAt: user.createdAt,
     };
   }
 
@@ -103,12 +115,16 @@ export class AuthService {
     const payload = { sub: userId, email };
     const [accessToken, refreshToken] = await Promise.all([
       this.jwt.signAsync(payload, {
-        secret: this.config.get('JWT_ACCESS_SECRET'),
-        expiresIn: this.config.get('JWT_ACCESS_EXPIRES_IN'),
+        secret: this.config.getOrThrow<string>('JWT_ACCESS_SECRET'),
+        expiresIn: this.config.getOrThrow<string>('JWT_ACCESS_EXPIRES_IN') as
+          | `${number}${'s' | 'm' | 'h' | 'd'}`
+          | number,
       }),
       this.jwt.signAsync(payload, {
-        secret: this.config.get('JWT_REFRESH_SECRET'),
-        expiresIn: this.config.get('JWT_REFRESH_EXPIRES_IN'),
+        secret: this.config.getOrThrow<string>('JWT_REFRESH_SECRET'),
+        expiresIn: this.config.getOrThrow<string>('JWT_REFRESH_EXPIRES_IN') as
+          | `${number}${'s' | 'm' | 'h' | 'd'}`
+          | number,
       }),
     ]);
     return { accessToken, refreshToken };

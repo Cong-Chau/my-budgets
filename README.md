@@ -47,7 +47,7 @@ FINANCE-MANAGEMENT/
 
 | Layer | Công nghệ |
 |---|---|
-| Frontend | React 19, TypeScript, Vite, Tailwind CSS v4, Framer Motion, Redux Toolkit, Recharts |
+| Frontend | React 19, TypeScript, Vite, Tailwind CSS v4, Framer Motion, Recharts |
 | Backend | NestJS 11, TypeScript, Prisma 6, Passport JWT |
 | Database | PostgreSQL 16 |
 | AI | Google Gemini API (xoay vòng 5 API key) |
