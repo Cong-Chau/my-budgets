@@ -45,7 +45,7 @@ export function ChatBox() {
   }
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex flex-col items-end gap-3">
       <AnimatePresence>
         {open && (
           <motion.div
@@ -53,8 +53,8 @@ export function ChatBox() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.92, y: 20 }}
             transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-            className="w-80 sm:w-96 bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700/40 flex flex-col overflow-hidden"
-            style={{ height: '480px' }}
+            className="w-[calc(100vw-2rem)] sm:w-80 md:w-96 bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700/40 flex flex-col overflow-hidden"
+            style={{ height: '480px', maxHeight: 'calc(100vh - 5rem)' }}
           >
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-3 bg-blue-600 dark:bg-blue-700">

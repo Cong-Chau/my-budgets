@@ -29,6 +29,12 @@ export class UsersController {
     return this.usersService.updateProfile(req.user.id, dto);
   }
 
+  @Patch('onboarding')
+  @HttpCode(HttpStatus.OK)
+  completeOnboarding(@Request() req: { user: AuthUser }) {
+    return this.usersService.completeOnboarding(req.user.id);
+  }
+
   @Patch('password')
   @HttpCode(HttpStatus.OK)
   changePassword(

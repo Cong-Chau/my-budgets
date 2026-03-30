@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useCallback } from 'react';
 import { authApi } from '../api/authApi';
+import { onboardingApi } from '../api/onboardingApi';
 import type { User } from '../types';
 
 interface ApiError {
@@ -23,6 +24,7 @@ interface AuthContextType extends AuthState {
   logout: () => Promise<void>;
   updateProfile: (name: string) => Promise<boolean>;
   changePassword: (currentPassword: string, newPassword: string) => Promise<{ ok: boolean; message: string }>;
+  completeOnboarding: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -98,6 +100,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
+  const completeOnboarding = useCallback(async () => {
+    await onboardingApi.complete();
+    setState((s) => s.user ? { ...s, user: { ...s.user, isFirstTime: false } } : s);
+  }, []);
+
   const changePassword = useCallback(
     async (currentPassword: string, newPassword: string) => {
       try {
@@ -115,7 +122,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   );
 
   return (
-    <AuthContext.Provider value={{ ...state, login, register, fetchMe, logout, updateProfile, changePassword }}>
+    <AuthContext.Provider value={{ ...state, login, register, fetchMe, logout, updateProfile, changePassword, completeOnboarding }}>
       {children}
     </AuthContext.Provider>
   );

@@ -16,6 +16,14 @@ export class UsersService {
     return { id: userId, name: account.name };
   }
 
+  async completeOnboarding(userId: number) {
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: { isFirstTime: false },
+    });
+    return { ok: true };
+  }
+
   async changePassword(userId: number, dto: ChangePasswordDto) {
     const user = await this.prisma.user.findUnique({ where: { id: userId } });
     if (!user) throw new UnauthorizedException();

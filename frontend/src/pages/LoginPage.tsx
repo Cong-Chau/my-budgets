@@ -9,27 +9,40 @@ import {
   Lock,
   User,
   ArrowRight,
-  TrendingUp,
-  TrendingDown,
+  Sparkles,
   AlertCircle,
 } from "lucide-react";
 
 const inputClass =
-  "w-full bg-slate-100 dark:bg-[#1e293b] border border-slate-200 dark:border-slate-700/50 rounded-xl py-3.5 pl-11 pr-4 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500/50 transition-all";
+  "w-full bg-zinc-900/60 border border-zinc-700/60 rounded-xl py-3.5 pl-11 pr-4 text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500/50 transition-all duration-200";
 
 const formVariants: Variants = {
-  hidden: { opacity: 0, x: 24 },
-  show: () => ({
+  hidden: { opacity: 0, x: 20 },
+  show: {
     opacity: 1,
     x: 0,
-    transition: { duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] },
-  }),
-  exit: () => ({
+    transition: { duration: 0.32, ease: [0.25, 0.46, 0.45, 0.94] },
+  },
+  exit: {
     opacity: 0,
-    x: -24,
-    transition: { duration: 0.25 },
-  }),
+    x: -20,
+    transition: { duration: 0.22 },
+  },
 };
+
+const TAGLINES_LOGIN = [
+  "Ví của bạn đang chờ 💰",
+  "Chào mừng trở lại 👋",
+  "Ready to glow up your finances? ✨",
+];
+const TAGLINES_REGISTER = [
+  "Bước đầu tiên đến tự do tài chính 🚀",
+  "Level up your money game 💎",
+  "Bắt đầu hành trình của bạn ✨",
+];
+
+// Cycle tagline once per mount
+const taglineIndex = Math.floor(Math.random() * 3);
 
 export default function LoginPage() {
   const { login, register, loading, error } = useAuth();
@@ -46,101 +59,89 @@ export default function LoginPage() {
     if (ok) navigate("/");
   };
 
+  const tagline =
+    mode === "login"
+      ? TAGLINES_LOGIN[taglineIndex]
+      : TAGLINES_REGISTER[taglineIndex];
+
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#0f172a] flex">
-      {/* Left panel – branding */}
+    <div className="min-h-screen bg-[#09090b] flex overflow-hidden">
+      {/* Ambient background blobs */}
+      <div className="pointer-events-none fixed inset-0 overflow-hidden">
+        <div className="absolute -top-40 -left-40 w-96 h-96 rounded-full bg-blue-600/10 blur-3xl" />
+        <div className="absolute top-1/2 -right-32 w-80 h-80 rounded-full bg-indigo-600/10 blur-3xl" />
+        <div className="absolute -bottom-32 left-1/3 w-72 h-72 rounded-full bg-violet-600/8 blur-3xl" />
+      </div>
+
+      {/* ── Left panel — branding ─────────────────────────── */}
       <motion.div
-        className="hidden lg:flex lg:w-1/2 flex-col justify-between p-12 border-r border-slate-200 dark:border-slate-800 bg-linear-to-b from-blue-50 dark:from-blue-950/30 via-transparent to-transparent"
+        className="hidden lg:flex lg:w-[52%] flex-col justify-between p-14 border-r border-zinc-800/60 relative"
         initial={{ opacity: 0, x: -40 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+        transition={{ duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
       >
         {/* Logo */}
         <motion.div
           className="flex items-center gap-3"
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: -16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.45 }}
+          transition={{ delay: 0.2, duration: 0.4 }}
         >
           <motion.div
-            className="w-10 h-10 rounded-xl bg-linear-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/30"
-            whileHover={{ scale: 1.1, rotate: 5 }}
+            className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center shadow-lg shadow-blue-500/25"
+            whileHover={{ scale: 1.1, rotate: 6 }}
             transition={{ type: "spring", stiffness: 400, damping: 15 }}
           >
             <Wallet size={20} className="text-white" />
           </motion.div>
-          <span className="text-xl font-bold text-slate-900 dark:text-slate-100 tracking-tight">
+          <span className="text-xl font-bold text-zinc-100 tracking-tight">
             MyBudget
           </span>
         </motion.div>
 
-        {/* Hero */}
+        {/* Hero copy */}
         <motion.div
-          className="space-y-6"
-          initial={{ opacity: 0, y: 30 }}
+          className="space-y-6 max-w-sm"
+          initial={{ opacity: 0, y: 32 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.55 }}
+          transition={{ delay: 0.28, duration: 0.55 }}
         >
-          <h2 className="text-4xl font-bold text-slate-900 dark:text-slate-100 leading-snug">
-            Kiểm soát tài chính
-            <br />
-            <span className="text-blue-600 dark:text-blue-400">
-              thông minh hơn
+          <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 rounded-full px-4 py-1.5 text-blue-400 text-xs font-medium">
+            <Sparkles size={12} />
+            Quản lý tài chính thông minh
+          </div>
+
+          <h2 className="text-4xl font-bold text-zinc-100 leading-tight">
+            Kiểm soát tiền bạc,{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">
+              sống tự do hơn
             </span>
           </h2>
-          <p className="text-slate-500 dark:text-slate-400 text-lg leading-relaxed max-w-sm">
-            Theo dõi thu chi, phân tích chi tiêu và đạt được mục tiêu tài chính
-            của bạn.
+          <p className="text-zinc-400 text-base leading-relaxed">
+            Theo dõi thu chi hàng ngày, đặt ngân sách thông minh và nhận phân
+            tích từ AI — tất cả trong một nơi.
           </p>
-          <div className="grid grid-cols-2 gap-4 pt-2">
+
+          {/* Feature pills */}
+          <div className="flex flex-wrap gap-2 pt-1">
             {[
-              {
-                icon: TrendingUp,
-                label: "Thu nhập",
-                value: "+$5,200",
-                color: "text-green-600 dark:text-green-400",
-                bg: "bg-green-500/15",
-              },
-              {
-                icon: TrendingDown,
-                label: "Chi tiêu",
-                value: "-$3,150",
-                color: "text-red-600 dark:text-red-400",
-                bg: "bg-red-500/15",
-              },
-            ].map((card, i) => (
-              <motion.div
-                key={card.label}
-                className="bg-white dark:bg-[#1e293b] rounded-2xl p-5 border border-slate-200 dark:border-slate-700/50"
-                initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ delay: 0.45 + i * 0.1, duration: 0.4 }}
-                whileHover={{
-                  y: -4,
-                  boxShadow: "0 16px 32px -8px rgba(0,0,0,0.12)",
-                }}
+              "📊 Biểu đồ trực quan",
+              "🤖 AI phân tích",
+              "💰 Ngân sách thông minh",
+              "🔔 Cảnh báo vượt hạn",
+            ].map((f) => (
+              <span
+                key={f}
+                className="text-xs text-zinc-400 bg-zinc-800/60 border border-zinc-700/50 rounded-full px-3 py-1"
               >
-                <div className="flex items-center gap-2 mb-3">
-                  <div
-                    className={`w-7 h-7 rounded-lg ${card.bg} flex items-center justify-center`}
-                  >
-                    <card.icon size={14} className={card.color} />
-                  </div>
-                  <span className="text-xs text-slate-500 dark:text-slate-400">
-                    {card.label}
-                  </span>
-                </div>
-                <p className={`text-2xl font-bold ${card.color}`}>
-                  {card.value}
-                </p>
-                <p className="text-xs text-slate-400 mt-1">Tháng này</p>
-              </motion.div>
+                {f}
+              </span>
             ))}
           </div>
         </motion.div>
 
         <motion.p
-          className="text-slate-400 text-sm"
+          className="text-zinc-600 text-sm"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6, duration: 0.4 }}
@@ -149,27 +150,25 @@ export default function LoginPage() {
         </motion.p>
       </motion.div>
 
-      {/* Right panel – form */}
+      {/* ── Right panel — form ────────────────────────────── */}
       <motion.div
-        className="flex-1 flex items-center justify-center p-8"
-        initial={{ opacity: 0, x: 40 }}
+        className="flex-1 flex items-center justify-center p-8 relative"
+        initial={{ opacity: 0, x: 32 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+        transition={{ duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
       >
         <div className="w-full max-w-md">
           {/* Mobile logo */}
           <motion.div
             className="flex items-center gap-3 mb-10 lg:hidden"
-            initial={{ opacity: 0, y: -16 }}
+            initial={{ opacity: 0, y: -14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1, duration: 0.4 }}
+            transition={{ delay: 0.1, duration: 0.38 }}
           >
-            <div className="w-10 h-10 rounded-xl bg-linear-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/30">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center shadow-lg shadow-blue-500/25">
               <Wallet size={20} className="text-white" />
             </div>
-            <span className="text-xl font-bold text-slate-900 dark:text-slate-100">
-              MyBudget
-            </span>
+            <span className="text-xl font-bold text-zinc-100">MyBudget</span>
           </motion.div>
 
           {/* Heading */}
@@ -179,162 +178,170 @@ export default function LoginPage() {
               className="mb-8"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              transition={{ duration: 0.28 }}
+              exit={{ opacity: 0, y: 8 }}
+              transition={{ duration: 0.25 }}
             >
-              <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-2">
-                {mode === "login" ? "Chào mừng trở lại" : "Tạo tài khoản"}
+              <p className="text-sm text-blue-400 font-medium mb-2">{tagline}</p>
+              <h1 className="text-3xl font-bold text-zinc-100 mb-1.5 tracking-tight">
+                {mode === "login" ? "Đăng nhập" : "Tạo tài khoản"}
               </h1>
-              <p className="text-slate-500 dark:text-slate-400">
+              <p className="text-zinc-500 text-sm">
                 {mode === "login"
-                  ? "Đăng nhập vào tài khoản của bạn"
-                  : "Bắt đầu hành trình tài chính của bạn"}
+                  ? "Nhập thông tin để tiếp tục hành trình tài chính"
+                  : "Miễn phí, nhanh, không rắc rối — hứa đó 🤝"}
               </p>
             </motion.div>
           </AnimatePresence>
 
-          <AnimatePresence mode="wait">
-            <motion.form
-              key={mode}
-              onSubmit={handleSubmit}
-              className="space-y-5"
-              custom={1}
-              variants={formVariants}
-              initial="hidden"
-              animate="show"
-              exit="exit"
-            >
-              {mode === "register" && (
-                <motion.div
-                  className="space-y-1.5"
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                    Họ tên
+          {/* Form card */}
+          <div className="bg-zinc-900/50 border border-zinc-800/60 rounded-2xl p-6 backdrop-blur-sm shadow-xl shadow-black/30">
+            <AnimatePresence mode="wait">
+              <motion.form
+                key={mode}
+                onSubmit={handleSubmit}
+                className="space-y-4"
+                variants={formVariants}
+                initial="hidden"
+                animate="show"
+                exit="exit"
+              >
+                {mode === "register" && (
+                  <motion.div
+                    className="space-y-1.5"
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.28 }}
+                  >
+                    <label className="text-xs font-medium text-zinc-400 uppercase tracking-wider">
+                      Họ tên
+                    </label>
+                    <div className="relative">
+                      <User
+                        size={16}
+                        className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none"
+                      />
+                      <input
+                        type="text"
+                        placeholder="Tên của bạn"
+                        value={form.name}
+                        onChange={(e) =>
+                          setForm({ ...form, name: e.target.value })
+                        }
+                        className={inputClass}
+                      />
+                    </div>
+                  </motion.div>
+                )}
+
+                <div className="space-y-1.5">
+                  <label className="text-xs font-medium text-zinc-400 uppercase tracking-wider">
+                    Email
                   </label>
                   <div className="relative">
-                    <User
-                      size={17}
-                      className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
+                    <Mail
+                      size={16}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none"
                     />
                     <input
-                      type="text"
-                      placeholder="Tên của bạn"
-                      value={form.name}
+                      type="email"
+                      placeholder="ban@example.com"
+                      required
+                      value={form.email}
                       onChange={(e) =>
-                        setForm({ ...form, name: e.target.value })
+                        setForm({ ...form, email: e.target.value })
                       }
                       className={inputClass}
                     />
                   </div>
-                </motion.div>
-              )}
-
-              <div className="space-y-1.5">
-                <label className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                  Email
-                </label>
-                <div className="relative">
-                  <Mail
-                    size={17}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
-                  />
-                  <input
-                    type="email"
-                    placeholder="ban@example.com"
-                    required
-                    value={form.email}
-                    onChange={(e) =>
-                      setForm({ ...form, email: e.target.value })
-                    }
-                    className={inputClass}
-                  />
                 </div>
-              </div>
 
-              <div className="space-y-1.5">
-                <label className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                  Mật khẩu
-                </label>
-                <div className="relative">
-                  <Lock
-                    size={17}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
-                  />
-                  <input
-                    type="password"
-                    placeholder="••••••••"
-                    required
-                    minLength={6}
-                    value={form.password}
-                    onChange={(e) =>
-                      setForm({ ...form, password: e.target.value })
-                    }
-                    className={inputClass}
-                  />
+                <div className="space-y-1.5">
+                  <label className="text-xs font-medium text-zinc-400 uppercase tracking-wider">
+                    Mật khẩu
+                  </label>
+                  <div className="relative">
+                    <Lock
+                      size={16}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none"
+                    />
+                    <input
+                      type="password"
+                      placeholder="••••••••"
+                      required
+                      minLength={6}
+                      value={form.password}
+                      onChange={(e) =>
+                        setForm({ ...form, password: e.target.value })
+                      }
+                      className={inputClass}
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <AnimatePresence>
-                {error && (
-                  <motion.div
-                    className="flex items-center gap-2.5 text-sm text-red-600 dark:text-red-400 bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3"
-                    initial={{ opacity: 0, y: -8, scale: 0.97 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: -8, scale: 0.97 }}
-                    transition={{ duration: 0.25 }}
-                  >
-                    <AlertCircle size={16} className="shrink-0" />
-                    <span>Thông tin đăng nhập không chính xác</span>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-
-              <motion.button
-                type="submit"
-                disabled={loading}
-                whileHover={{
-                  scale: loading ? 1 : 1.02,
-                  boxShadow: "0 12px 24px -6px rgba(59,130,246,0.4)",
-                }}
-                whileTap={{ scale: 0.97 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                className="w-full bg-blue-500 hover:bg-blue-600 active:bg-blue-700 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold py-3.5 rounded-xl transition-colors duration-200 flex items-center justify-center gap-2 shadow-lg shadow-blue-500/20 mt-2"
-              >
-                {loading ? (
-                  <motion.span
-                    animate={{ opacity: [1, 0.5, 1] }}
-                    transition={{ repeat: Infinity, duration: 1.2 }}
-                  >
-                    Đang xử lý…
-                  </motion.span>
-                ) : (
-                  <>
-                    {mode === "login" ? "Đăng nhập" : "Đăng ký"}
-                    <motion.span
-                      animate={{ x: [0, 4, 0] }}
-                      transition={{
-                        repeat: Infinity,
-                        duration: 1.5,
-                        ease: "easeInOut",
-                      }}
+                <AnimatePresence>
+                  {error && (
+                    <motion.div
+                      className="flex items-center gap-2.5 text-sm text-red-400 bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3"
+                      initial={{ opacity: 0, y: -6, scale: 0.97 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -6, scale: 0.97 }}
+                      transition={{ duration: 0.22 }}
                     >
-                      <ArrowRight size={18} />
-                    </motion.span>
-                  </>
-                )}
-              </motion.button>
-            </motion.form>
-          </AnimatePresence>
+                      <AlertCircle size={15} className="shrink-0" />
+                      <span>{error}</span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
 
+                <motion.button
+                  type="submit"
+                  disabled={loading}
+                  whileHover={
+                    loading
+                      ? {}
+                      : {
+                          scale: 1.02,
+                          boxShadow: "0 0 28px -4px rgba(59,130,246,0.5)",
+                        }
+                  }
+                  whileTap={{ scale: 0.97 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 18 }}
+                  className="w-full bg-blue-600 hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-3.5 rounded-xl transition-colors duration-200 flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20 mt-1"
+                >
+                  {loading ? (
+                    <motion.span
+                      animate={{ opacity: [1, 0.45, 1] }}
+                      transition={{ repeat: Infinity, duration: 1.1 }}
+                    >
+                      Đang xử lý…
+                    </motion.span>
+                  ) : (
+                    <>
+                      {mode === "login" ? "Đăng nhập" : "Tạo tài khoản"}
+                      <motion.span
+                        animate={{ x: [0, 4, 0] }}
+                        transition={{
+                          repeat: Infinity,
+                          duration: 1.6,
+                          ease: "easeInOut",
+                        }}
+                      >
+                        <ArrowRight size={17} />
+                      </motion.span>
+                    </>
+                  )}
+                </motion.button>
+              </motion.form>
+            </AnimatePresence>
+          </div>
+
+          {/* Switch mode */}
           <motion.p
-            className="text-sm text-center text-slate-500 mt-6"
+            className="text-sm text-center text-zinc-500 mt-5"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
+            transition={{ delay: 0.45 }}
           >
             {mode === "login" ? "Chưa có tài khoản? " : "Đã có tài khoản? "}
             <motion.button
@@ -342,11 +349,30 @@ export default function LoginPage() {
               onClick={() => setMode(mode === "login" ? "register" : "login")}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="text-blue-500 dark:text-blue-400 font-medium hover:text-blue-600 dark:hover:text-blue-300 transition-colors"
+              className="text-blue-400 font-medium hover:text-blue-300 transition-colors"
             >
               {mode === "login" ? "Đăng ký ngay" : "Đăng nhập"}
             </motion.button>
           </motion.p>
+
+          {/* New-here hint */}
+          <AnimatePresence>
+            {mode === "register" && (
+              <motion.div
+                className="mt-4 flex items-center justify-center gap-2 text-xs text-zinc-500 bg-zinc-800/40 border border-zinc-700/40 rounded-xl px-4 py-3"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 8 }}
+                transition={{ duration: 0.28 }}
+              >
+                <Sparkles size={13} className="text-blue-400 shrink-0" />
+                <span>
+                  Lần đầu dùng? Chúng tôi sẽ hướng dẫn bạn qua vài bước nhanh
+                  ✨
+                </span>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </motion.div>
     </div>

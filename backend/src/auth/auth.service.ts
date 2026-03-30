@@ -34,35 +34,12 @@ export class AuthService {
       include: { account: true },
     });
 
-    await this.createDefaultCategories(user.id);
-
     const tokens = await this.generateTokens(user.id, user.email);
     await this.saveRefreshToken(user.id, tokens.refreshToken);
     return {
-      user: { id: user.id, email: user.email, name: user.account?.name },
+      user: { id: user.id, email: user.email, name: user.account?.name, isFirstTime: user.isFirstTime },
       ...tokens,
     };
-  }
-
-  private async createDefaultCategories(userId: number) {
-    const defaults = [
-      // Thu nhập
-      { name: 'Lương', type: 'INCOME' as const },
-      { name: 'Freelance', type: 'INCOME' as const },
-      { name: 'Đầu tư', type: 'INCOME' as const },
-      { name: 'Thưởng', type: 'INCOME' as const },
-      // Chi tiêu
-      { name: 'Thực phẩm', type: 'EXPENSE' as const },
-      { name: 'Nhà ở', type: 'EXPENSE' as const },
-      { name: 'Di chuyển', type: 'EXPENSE' as const },
-      { name: 'Giải trí', type: 'EXPENSE' as const },
-      { name: 'Mua sắm', type: 'EXPENSE' as const },
-      { name: 'Sức khỏe', type: 'EXPENSE' as const },
-    ];
-    await this.prisma.category.createMany({
-      data: defaults.map((c) => ({ ...c, userId })),
-      skipDuplicates: true,
-    });
   }
 
   async login(dto: LoginDto) {
@@ -78,7 +55,7 @@ export class AuthService {
     const tokens = await this.generateTokens(user.id, user.email);
     await this.saveRefreshToken(user.id, tokens.refreshToken);
     return {
-      user: { id: user.id, email: user.email, name: user.account?.name },
+      user: { id: user.id, email: user.email, name: user.account?.name, isFirstTime: user.isFirstTime },
       ...tokens,
     };
   }
@@ -108,6 +85,7 @@ export class AuthService {
       select: {
         id: true,
         email: true,
+        isFirstTime: true,
         createdAt: true,
         account: { select: { name: true } },
       },
@@ -116,6 +94,7 @@ export class AuthService {
       id: user?.id,
       email: user?.email,
       name: user?.account?.name,
+      isFirstTime: user?.isFirstTime,
       createdAt: user?.createdAt,
     };
   }

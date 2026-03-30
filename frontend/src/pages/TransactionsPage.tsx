@@ -93,7 +93,7 @@ export default function TransactionsPage() {
 
   return (
     <motion.div
-      className="p-8"
+      className="p-4 md:p-6 lg:p-8"
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: 'easeOut' }}
@@ -122,7 +122,7 @@ export default function TransactionsPage() {
 
       {/* Bộ lọc */}
       <motion.div
-        className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm p-4 mb-6 flex flex-wrap gap-3 items-end"
+        className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm p-4 mb-6 flex flex-wrap gap-3 items-end w-full"
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.1 }}
@@ -185,7 +185,8 @@ export default function TransactionsPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.2 }}
         >
-          <table className="w-full text-sm">
+          <div className="overflow-x-auto">
+          <table className="w-full text-sm min-w-[560px]">
             <thead className="bg-gray-50 dark:bg-gray-700 text-gray-500 dark:text-gray-400 border-b border-gray-100 dark:border-gray-600">
               <tr>
                 <th className="text-left px-5 py-3 font-medium">Ngày</th>
@@ -255,6 +256,7 @@ export default function TransactionsPage() {
               </AnimatePresence>
             </tbody>
           </table>
+          </div>
         </motion.div>
       )}
 

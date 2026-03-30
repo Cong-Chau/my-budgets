@@ -5,6 +5,17 @@ export interface User {
   id: number;
   email: string;
   name?: string;
+  isFirstTime?: boolean;
+}
+
+export interface CategoryBudget {
+  id: number;
+  amount: number;
+  period: BudgetPeriod;
+  totalSpent: number;
+  remaining: number;
+  percentage: number;
+  status: BudgetStatus;
 }
 
 export interface Category {
@@ -13,6 +24,7 @@ export interface Category {
   type: CategoryType;
   userId: number;
   createdAt: string;
+  budget: CategoryBudget | null;
 }
 
 export interface Transaction {

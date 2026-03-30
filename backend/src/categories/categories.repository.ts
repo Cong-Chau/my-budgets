@@ -21,6 +21,13 @@ export class CategoriesRepository {
     return this.prisma.category.create({ data });
   }
 
+  createMany(userId: number, items: { name: string; type: CategoryType }[]) {
+    return this.prisma.category.createMany({
+      data: items.map((c) => ({ ...c, userId })),
+      skipDuplicates: true,
+    });
+  }
+
   update(
     id: number,
     userId: number,

@@ -9,6 +9,7 @@ import TransactionsPage from "./pages/TransactionsPage";
 import CategoriesPage from "./pages/CategoriesPage";
 import { ProfilePage } from "./pages/ProfilePage";
 import { ChatBox } from "./components/ChatBox";
+import { Onboarding } from "./components/Onboarding";
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
@@ -20,6 +21,13 @@ function PrivateRoute({ children }: { children: React.ReactNode }) {
 function DataSync() {
   useDataSync();
   return null;
+}
+
+function OnboardingGate() {
+  const { user, fetchMe } = useAuth();
+  if (!user || !localStorage.getItem("accessToken")) return null;
+  if (!user.isFirstTime) return null;
+  return <Onboarding onDone={() => fetchMe()} />;
 }
 
 function App() {
@@ -49,6 +57,7 @@ function App() {
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       <DataSync />
+      <OnboardingGate />
       {!!localStorage.getItem("accessToken") && <ChatBox />}
     </BrowserRouter>
   );

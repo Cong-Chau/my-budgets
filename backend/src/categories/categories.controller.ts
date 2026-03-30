@@ -48,6 +48,14 @@ export class CategoriesController {
     return this.service.create(req.user.id, dto);
   }
 
+  @Post('bulk')
+  createBulk(
+    @Request() req: { user: AuthUser },
+    @Body() body: { categories: CreateCategoryDto[] },
+  ) {
+    return this.service.createBulk(req.user.id, body.categories);
+  }
+
   @Patch(':id')
   update(
     @Request() req: { user: AuthUser },

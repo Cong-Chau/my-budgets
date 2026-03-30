@@ -72,7 +72,7 @@ export function ProfilePage() {
 
   return (
     <motion.div
-      className="p-8"
+      className="p-4 md:p-6 lg:p-8"
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: "easeOut" }}

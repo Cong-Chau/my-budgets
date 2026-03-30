@@ -1,1 +1,88 @@
-- chart dòng tiền hiển thị theo ngày
+Make the entire web application fully responsive using Tailwind CSS.
+
+### Requirements:
+
+1. Breakpoints (Tailwind):
+- sm: ≥ 640px
+- md: ≥ 768px
+- lg: ≥ 1024px
+- xl: ≥ 1280px
+
+
+2. Layout:
+
+- Use Tailwind responsive utilities:
+  - flex, grid
+  - sm:, md:, lg:, xl:
+- Avoid fixed widths (no hard-coded px unless necessary)
+- Use:
+  - w-full, max-w-*, mx-auto
+  - responsive padding (px-4 md:px-6 lg:px-8)
+
+
+3. Navigation:
+
+- Navbar:
+  - Desktop: show full menu
+  - Mobile: hide menu → show hamburger button
+- Sidebar:
+  - Desktop: visible (lg:block)
+  - Mobile: hidden → toggle drawer (lg:hidden)
+
+
+4. Components:
+
+- Cards:
+  - Stack on mobile (flex-col)
+  - Grid on larger screens (md:grid-cols-2, lg:grid-cols-3)
+
+- Tables:
+  - Wrap with: overflow-x-auto
+
+- Forms:
+  - Mobile: vertical layout (flex-col)
+  - Desktop: can use grid (md:grid-cols-2)
+
+
+5. Typography:
+
+- Use responsive text:
+  - text-sm md:text-base lg:text-lg
+- Maintain readability on small screens
+
+
+6. Spacing:
+
+- Use responsive spacing:
+  - p-4 md:p-6 lg:p-8
+  - gap-4 md:gap-6
+
+
+7. Interactions:
+
+- Ensure buttons are touch-friendly:
+  - min-h-[44px]
+- Avoid hover-only effects:
+  - add active / focus states
+
+
+8. UI Issues to Fix:
+
+- No horizontal overflow
+- No overlapping elements
+- No content cut off
+- Ensure all sections scale properly
+
+9. Performance:
+
+- Avoid heavy animations on mobile
+- Keep layout simple and smooth
+
+### Goal:
+
+Make the UI:
+- Fully responsive across all devices
+- Clean and consistent
+- Production-ready
+
+Do NOT redesign UI. Only improve responsiveness using Tailwind.

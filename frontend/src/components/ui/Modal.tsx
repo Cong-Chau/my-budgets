@@ -19,7 +19,7 @@ export default function Modal({
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -29,7 +29,7 @@ export default function Modal({
           }}
         >
           <motion.div
-            className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-md"
+            className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-md max-h-[90vh] flex flex-col"
             initial={{ opacity: 0, scale: 0.92, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.92, y: 20 }}
@@ -49,7 +49,7 @@ export default function Modal({
                 <X size={20} />
               </motion.button>
             </div>
-            <div className="px-6 py-4">{children}</div>
+            <div className="px-6 py-4 overflow-y-auto">{children}</div>
           </motion.div>
         </motion.div>
       )}
