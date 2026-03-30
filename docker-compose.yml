@@ -28,7 +28,7 @@ services:
       # Override values that differ between local and Docker
       DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD:-200604}@postgres:5432/finance_db?schema=public
       PORT: 3000
-      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:2604}
 
   frontend:
     build:
@@ -40,7 +40,7 @@ services:
     depends_on:
       - backend
     ports:
-      - "${APP_PORT:-80}:80"
+      - "${APP_PORT:-2604}:80"
 
 volumes:
   postgres_data:
