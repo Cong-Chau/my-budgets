@@ -37,8 +37,7 @@ FINANCE-MANAGEMENT/
 │   └── src/
 │       ├── pages/        # Dashboard, Transactions, Categories, Profile
 │       ├── components/   # UI components, Sidebar, Onboarding
-│       ├── context/      # Auth, Category, Budget contexts
-│       └── store/        # Redux Toolkit slices
+│       └── context/      # Auth, Category, Budget contexts
 │
 └── docker-compose.yml  # PostgreSQL + Backend + Frontend (Nginx)
 ```
