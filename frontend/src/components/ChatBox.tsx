@@ -1,44 +1,54 @@
-import { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Send, Bot, User, Loader2 } from 'lucide-react';
-import { chatApi } from '../api/chatApi';
+import { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { MessageCircle, X, Send, Bot, User, Loader2 } from "lucide-react";
+import { chatApi } from "../api/chatApi";
 
 interface Message {
-  role: 'user' | 'assistant';
+  role: "user" | "assistant";
   content: string;
 }
 
 export function ChatBox() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'assistant', content: 'Xin chào! Tôi là trợ lý tài chính của bạn. Hãy hỏi tôi bất cứ điều gì về thu chi, ngân sách, hoặc lời khuyên tiết kiệm!' },
+    {
+      role: "assistant",
+      content:
+        "Xin chào! Tôi là trợ lý tài chính của bạn. Hãy hỏi tôi bất cứ điều gì về thu chi, ngân sách, hoặc lời khuyên tiết kiệm!",
+    },
   ]);
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (open) bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (open) bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, open]);
 
   async function sendMessage() {
     const text = input.trim();
     if (!text || loading) return;
-    setInput('');
-    setMessages((m) => [...m, { role: 'user', content: text }]);
+    setInput("");
+    setMessages((m) => [...m, { role: "user", content: text }]);
     setLoading(true);
     try {
       const { reply } = await chatApi.sendMessage(text);
-      setMessages((m) => [...m, { role: 'assistant', content: reply }]);
+      setMessages((m) => [...m, { role: "assistant", content: reply }]);
     } catch {
-      setMessages((m) => [...m, { role: 'assistant', content: 'Xin lỗi, có lỗi xảy ra. Vui lòng thử lại.' }]);
+      setMessages((m) => [
+        ...m,
+        {
+          role: "assistant",
+          content: "Xin lỗi, có lỗi xảy ra. Vui lòng thử lại.",
+        },
+      ]);
     } finally {
       setLoading(false);
     }
   }
 
   function handleKeyDown(e: React.KeyboardEvent) {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       sendMessage();
     }
@@ -52,9 +62,9 @@ export function ChatBox() {
             initial={{ opacity: 0, scale: 0.92, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.92, y: 20 }}
-            transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+            transition={{ type: "spring", stiffness: 400, damping: 30 }}
             className="w-[calc(100vw-2rem)] sm:w-80 md:w-96 bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700/40 flex flex-col overflow-hidden"
-            style={{ height: '480px', maxHeight: 'calc(100vh - 5rem)' }}
+            style={{ height: "480px", maxHeight: "calc(100vh - 5rem)" }}
           >
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-3 bg-blue-600 dark:bg-blue-700">
@@ -82,22 +92,26 @@ export function ChatBox() {
                   key={i}
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className={`flex gap-2 ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}
+                  className={`flex gap-2 ${msg.role === "user" ? "flex-row-reverse" : "flex-row"}`}
                 >
                   <div
                     className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${
-                      msg.role === 'assistant'
-                        ? 'bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400'
-                        : 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-400'
+                      msg.role === "assistant"
+                        ? "bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400"
+                        : "bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-400"
                     }`}
                   >
-                    {msg.role === 'assistant' ? <Bot size={14} /> : <User size={14} />}
+                    {msg.role === "assistant" ? (
+                      <Bot size={14} />
+                    ) : (
+                      <User size={14} />
+                    )}
                   </div>
                   <div
                     className={`max-w-[75%] px-3 py-2 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap ${
-                      msg.role === 'user'
-                        ? 'bg-blue-600 text-white rounded-tr-sm'
-                        : 'bg-slate-100 dark:bg-slate-700/60 text-slate-800 dark:text-slate-200 rounded-tl-sm'
+                      msg.role === "user"
+                        ? "bg-blue-600 text-white rounded-tr-sm"
+                        : "bg-slate-100 dark:bg-slate-700/60 text-slate-800 dark:text-slate-200 rounded-tl-sm"
                     }`}
                   >
                     {msg.content}
@@ -107,10 +121,16 @@ export function ChatBox() {
               {loading && (
                 <div className="flex gap-2 items-center">
                   <div className="w-7 h-7 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center">
-                    <Bot size={14} className="text-blue-600 dark:text-blue-400" />
+                    <Bot
+                      size={14}
+                      className="text-blue-600 dark:text-blue-400"
+                    />
                   </div>
                   <div className="px-3 py-2 bg-slate-100 dark:bg-slate-700/60 rounded-2xl rounded-tl-sm">
-                    <Loader2 size={15} className="animate-spin text-slate-400" />
+                    <Loader2
+                      size={15}
+                      className="animate-spin text-slate-400"
+                    />
                   </div>
                 </div>
               )}
@@ -127,7 +147,7 @@ export function ChatBox() {
                   placeholder="Nhập câu hỏi..."
                   rows={1}
                   className="flex-1 bg-transparent text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none resize-none"
-                  style={{ maxHeight: '80px' }}
+                  style={{ maxHeight: "80px" }}
                 />
                 <button
                   onClick={sendMessage}
@@ -137,7 +157,9 @@ export function ChatBox() {
                   <Send size={14} />
                 </button>
               </div>
-              <p className="text-center text-xs text-slate-400 mt-1.5">Enter để gửi · Shift+Enter xuống dòng</p>
+              <p className="text-center text-xs text-slate-400 mt-1.5">
+                Enter để gửi · Shift+Enter xuống dòng
+              </p>
             </div>
           </motion.div>
         )}
@@ -152,7 +174,7 @@ export function ChatBox() {
       >
         <AnimatePresence mode="wait" initial={false}>
           <motion.span
-            key={open ? 'close' : 'open'}
+            key={open ? "close" : "open"}
             initial={{ rotate: -20, opacity: 0, scale: 0.7 }}
             animate={{ rotate: 0, opacity: 1, scale: 1 }}
             exit={{ rotate: 20, opacity: 0, scale: 0.7 }}
